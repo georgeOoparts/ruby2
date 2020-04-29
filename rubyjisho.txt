@@ -1,0 +1,186 @@
+puts "kkkkkk"
+puts 'kkkkkk'
+
+# comentes
+
+puts 2 + 3
+
+puts 5　　数値
+
+puts "5 + 2" 文字
+
+puts 3 * 5
+puts 6 / 2
+puts 9 % 2 余り
+
+
+puts "ninnja"+"wanko" 文字の結合
+
+puts "3" + "5"
+
+puts 3 + 5
+
+name="george"
+
+puts name
+
+name+"sato"
+puts "hello#{name}hello" >hellosatohello
+
+puts 'hello#{name}hello' >hello#{name}hello
+
+score=94
+if score>80
+	puts"okkkk"
+end
+
+score =80
+
+puts score<75  >>>false
+puts score>=80 >>>>true
+
+
+elsif rubyは
+ーーーーーーーーーーーーー２２２－－－－－－－－－－－
+name=["hirate","akina","otoha"]
+
+puts name>>>> hirate
+              akina
+              otoha
+
+puts name[0] >hirate
+
+---------------------------------------------              
+name=["hirate","akina","otoha"]
+
+name.each do|nameEach|
+	puts nameEach
+end
+
+>>>> 		hirate
+              akina
+              otoha
+
+---------------------------------------------
+user ={"name"=>"hirate","age"=>17}
+-----------------------
+puts user
+
+>>>
+{"name"=>"hirate","age"=>17}
+-----------------------
+puts user["name"]
+
+>>>
+hirate
+-----------------------
+user["name"]="suzumoto"
+
+puts user["name"]
+>>>
+suzumoto
+-----------------------
+user["gender"]="female"
+
+puts user
+>>>
+{"name"=>"hirate","age"=>17,"gender"=>"female"}
+---------------------------------------------
+シンボル
+user ={:name=>"hirate",:age=>17}
+でもOK
+puts "ruby"   puts :ruby 同じ 
+---------------------------------------------
+user ={:name=>"hirate",:age=>17}
+と
+user ={name=:"hirate",age:17}
+同じ
+省略形では
+puts user[:age]としなければだめ
+---------------------------------------------
+user ={:name=>"hirate"}
+
+user[:name]   true
+user[:age]   false
+---------------------------------------------
+users=[
+	{name:"hirate",age:14}
+	{name:"suzumoto",age:18}
+]
+-----------------------
+puts users[1][:name]
+>>>
+suzumoto
+-----------------------
+users.each do |user|
+	puts user[:name]
+end
+>>>
+hirate
+suzumoto
+---------------------------------------------
+メソッド
+def introduce
+	puts"naiyou"
+end
+
+呼び出し
+introduce
+---------------------------------------------
+審議値を返す　メソッド
+def negative?(number)
+	return number<0
+end
+---------------------------------------------
+# キーワード引数を使うように書き換えてください
+def buy(item:, price:, count:)
+	puts "#{item}を#{count}台のお買い上げです"
+	puts "合計金額は#{price * count}円です"
+end
+
+# キーワード引数を使うように書き換えてください
+buy(item:"テレビ", price:15000, count:2)
+
+
+---------------------------------------------
+class Menu
+	attr_accessor :name
+	attr_accessor :price
+
+	
+	def initialize
+    
+    		puts"クラスが作成された時に実行"
+  	end
+
+
+	def info
+    
+    		return "#{self.name} #{self.price}円"
+  	end
+end
+-----------------------
+kuso=Menu.new
+kuso.name="sushi"
+-----------------------
+puts kuso.name
+>>>
+sushi
+-----------------------
+
+
+
+---------------------------------------------
+---------------------------------------------
+-----------------------
+-----------------------
+-----------------------
+-----------------------
+-----------------------
+
+
+
+
+
+
+
