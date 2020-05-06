@@ -217,11 +217,271 @@ puts birthday
 -----------------------
 puts birthday.sunday?
 ---------------------------------------------
+---------------------------------------------
  # クラスメソッド「is_discount_day?」を定義してください
   def Menu.is_discount_day?
   end
----------------------------------------------
+-------
 
+--------------------------------------
+ruby rails
+新しいアプリケーション（tweet_app）を作る>必要なファイルが勝手に作られる
+ターミナル
+rails new tweet_app
+-----------------------
+サーバを起動
+ブラウザでアドレスlocalhost:3000に最初期のホームページが立ち上がらせる
+
+ターミナル
+rails server
+
+ブラウザでアドレスlocalhost:3000を入力
+＞＞＞
+ブラウザに最初期のホームページが立ち上がる
+-----------------------
+ブラウザ　アドレス（localhost:3000/home/top）
+にホームページのトップページを立ち上げる
+rails generate controller home top
+
+/自動でapp/viewsにhomeフォルダを作り、top.html.erbというファイルを作られる
+
+//app/controllersにhome_controller.rbというファイルを作る　
+class HomeController < ApplicationController
+  def top//ここでtop.html.erbというファイルを指定している（アクションという）
+  end
+end
+
+app/controllers/home_controller.rbでapp/views/top.html.erb　を指定し実行する
+--------------------------------------
+--------------------------------------
+ページが表示されるまで
+ルーテイング（コントローラとアクションを指定）＞コントローラ（アクションを指定）＞ビュー
+
+//まずルーティングで確認＞コントローラへ
+
+tweet_app/config/routes.rb
+Rails.application.routes.draw do
+  get "home/top" => "home#top"
+end
+-----------------------
+//コントローラで.html.erbファイルを指定
+app/controllersにhome_controller.rbを変更
+def top//ここでabout.html.erbというファイルを指定している（アクションという）
+end
+
+-----------------------
+
+
+中のhtmlを変える
+app/views/home/top.html.erb
+の内容を変える
+-----------------------
+アドレスを変えるlocalhost:3000/home/topをlocalhost:3000/topにする
+tweet_app/config/routes.rbの中を変更
+
+get "home/top" => "home#top"
+↓
+get "top" => "home#top"
+-----------------------
+アクション（アドレス）の数を増やす（localhost:3000/home/about）を追加
+tweet_app/config/routes.rbの中を変更
+
+get "about" => "home#about"
+を追加
+
+app/controllersにhome_controller.rbを変更
+def about//ここでabout.html.erbというファイルを指定している（アクションという）
+end
+を追加
+
+app/views/home/about.html.erbというファイルを作る
+htmlの内容を書く
+-----------------------
+cssを追加
+app/assets/stylesheets
+-----------------------
+画像を表示
+app/public/に画像を置く
+<img src="/画像名" >で画像表示
+-----------------------
+最初期のアドレスlocalhost:3000でトップページを表示するよう指定
+tweet_app/config/routes.rbの中を変更
+
+get "top" => "home#top"
+↓
+get "/" => "home#top"
+-----------------------
+リンクを張る
+app/views/home/about.html.erbというファイル
+<a href="/">tweetapp</a>
+<a href="/about">tweetappとは</a>
+
+tweet_app/config/routes.rbの中を変更
+
+get "/" => "home#top"
+get "about" => "home#about"
+-----------------------
+<%
+  posts=[
+    "今日からProgateでRailsの勉強するよー！",
+    "投稿一覧ページ作成中！"
+  ]
+%>
+-----------------------
+<!-- 以下の<% %>を使ってeach文を追加してください -->
+    <%posts.each do |post| %>
+      <div class="posts-index-item">
+        <!-- 以下の<%= %>を使って投稿内容を表示してください -->
+        <%= post%>
+      </div>
+    <!-- 以下の<% %>を使ってeach文のendを追加してください -->
+    <%end%>
+
+-----------------------
+-----------------------
+-----------------------
+-----------------------
+-----------------------
+-----------------------
+-----------------------
+-----------------------
+
+
+-------------------------------------
+サイトの投稿のする部分を作る（まずは一覧であるindexを作る）
+ターミナル
+rails generate controller　posts　index
+-----------------------
+erbファイルのなかでルビーで変数を定義
+<% post1="今日からProgateでRailsの勉強するよー！" %>
+erbファイルでhtmlでルビーで変数を表示
+<%= post1 %>
+-----------------------
+アクション（コントローラ）で変数を定義
+class PostsController < ApplicationController
+  def index
+    # viewで定義していた配列postsを@postsという変数名で定義してください
+    @posts=[
+      "今日からProgateでRailsの勉強するよー！",
+      "投稿一覧ページ作成中！"
+    ]
+  end
+end
+----------さらに↓erbで記述-------------
+//変数に@をつける
+<!-- 変数postsを@postsに書き換えてください -->
+    <% @posts.each do |post| %>
+      <div class="posts-index-item">
+        <%= post %>
+      </div>
+    <% end %>
+-----------------------
+ポストにtext形式のデータベースを作る（migrate）
+ターミナル
+rails g model Post content:text
+-----------------------
+作ったmigrateファイルで表を作成
+ターミナル
+rails db:migrate
+-----------------------
+rails consoleを立ち上げる
+ターミナル
+rails console
+-----------------------
+データベースに情報を入れる
+rails console上で
+■ コンソールで以下のコマンドを実行してください
+post1 = Post.new(content: "今日からProgateでRailsの勉強するよー！")
+post1.save
+-----------------------
+データベースの情報を取り出す
+■ ターミナルで以下のコマンドを実行してください
+rails console
+//
+■ コンソールで以下のコマンドを実行してください
+post = Post.first
+post.content
+-----------------------
+■ ターミナルで以下のコマンドを実行してください。
+rails console
+
+■ コンソールで以下のコマンドを実行してください。
+posts = Post.all
+
+posts[0]
+posts[1]
+
+posts[0].content
+posts[1].content
+-----------------------
+■ ターミナルで以下のコマンドを実行してください
+rails console
+
+■ コンソールで以下のコマンドを実行してください
+post3 = Post.new(content: "やっぱりプログラミングは楽しい！")
+post3.save
+--
+class PostsController < ApplicationController
+  def index
+    # @postsに代入されている配列をPost.allに書き換えてください
+    @posts = Post.all
+  end
+end
+--
+<% @posts.each do |post| %>
+      <div class="posts-index-item">
+        <!-- post.contentを使って書き換えてください -->
+        <%= post.content %>
+      </div>
+<% end %>
+-----------------------
+top.html.erb、about.html.erb、
+index.html.erbにあるヘッダーを共通のレイアウトとしてまとめていきましょう。
+「views/layouts/application.html.erb」
+application.html.erb
+<body>
+    <!-- ここにヘッダーを書いてください -->
+    <header>
+      <div class="header-logo">
+        <a href="/">TweetApp</a>
+      </div>
+      <ul class="header-menus">
+        <li><a href="/about">TweetAppとは</a></li>
+      </ul>
+    </header>
+    <!-- 各ビューファイルは以下のyieldに代入され、application.html.erbの一部となる -->
+    <%= yield %>
+  </body>
+
+-----------------------
+「views/layouts/application.html.erb」のリンクをaタグからlink_toメソッドに書き換えましょう。
+第一引数　表示　第2引数リンク
+        <!-- 以下のリンクをlink_toメソッドを用いて変更してください -->
+        <%= link_to("TweetApp", "/") %>
+
+-----------------------
+
+
+
+
+-----------------------
+
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
+--------------------------------------
 -----------------------
 -----------------------
 -----------------------
