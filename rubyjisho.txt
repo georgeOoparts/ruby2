@@ -460,24 +460,84 @@ application.html.erb
         <%= link_to("TweetApp", "/") %>
 
 -----------------------
-
-
-
-
 -----------------------
+-----------------------
+-----------------------
+--------------------------------------
+■ コンソールで以下のコードを実行してください。
+PostからID3を探してpostに代入
+post = Post.find_by(id: 3)
+postの値を表示
+post.content
+post.created_at
+--------------------------------------
+posts/1,posts/2～posts/99　などのページを作る　
+Rails.application.routes.draw do
+  get "posts/index" => "posts#index"
+  # ここに投稿詳細ページへのルーティングを追加してください
+  get "posts/:id" => "posts#show"
+  
+  get "/" => "home#top"
+  get "about" => "home#about"
+end
+--------------------------------------
+class PostsController < ApplicationController
+  def index
+    @posts = Post.all
+  end
+  
+  def show
+    # 変数paramsから「:id」の値を取得し、変数@idに代入してください
+    @id = params[:id]
+  end
+end
+--------------------------------------
+表示
+<%= @post.content %>
 
+<%= @post.created_at %>
 --------------------------------------
+def show
+    # find_byを用いてpostsテーブルから「params[:id]」に対応するデータを取り出し、変数@postに代入してください
+    @post=Post.find_by(id:params[:id])
+  end
 --------------------------------------
+<%= link_to(posts.content, "/posts/#{post.id}") %>
 --------------------------------------
+ post"posts/create"=>"posts#create"
 --------------------------------------
+<%=form_tag("/posts/create")do%>
+      <div class="form">
+        <div class="form-body">
+          <textarea></textarea>
+          <input type="submit" value="投稿">
+        </div>
+      </div>
+    <!-- end を追加してください -->
+    <%end%>
 --------------------------------------
+投稿ボタンを押すと/posts/indexへリンクする
+def create
+    # redirect_toメソッドを用いて、自動的に投稿一覧ページに転送されるようにしてください
+    redirect_to("/posts/index")
+  end
 --------------------------------------
+<textarea name="content"></textarea>
 --------------------------------------
+def create
+    # フォームから送信されたデータを受け取り、保存する処理を追加してください
+    @post = Post.new(content: params[:content])
+    @post.save
+    redirect_to("/posts/index")
+  end
 --------------------------------------
+def index            
+    # Post.allにorderメソッドを用いて、新しい投稿が上から順に表示されるようにしてください            
+    @posts = Post.all.order(created_at: :desc)            
+                    
+end
 --------------------------------------
---------------------------------------
---------------------------------------
---------------------------------------
+
 --------------------------------------
 --------------------------------------
 --------------------------------------
