@@ -297,6 +297,14 @@ end
 app/views/home/about.html.erbというファイルを作る
 htmlの内容を書く
 -----------------------
+
+共通部分を追加する場所は
+app/views/layouts/application.html.erb 
+にあります。
+
+body の中に記述
+
+-----------------------
 cssを追加
 app/assets/stylesheets
 -----------------------
@@ -315,6 +323,9 @@ get "/" => "home#top"
 app/views/home/about.html.erbというファイル
 <a href="/">tweetapp</a>
 <a href="/about">tweetappとは</a>
+-----------------------
+<%= link_to("リンクタイトル", "URL") %>
+-----------------------
 
 tweet_app/config/routes.rbの中を変更
 
