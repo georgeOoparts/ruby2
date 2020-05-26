@@ -192,11 +192,13 @@ end
 
 
 erbファイル
-<%=form_tag(送信先のURL) do%>
-
 <%=form_tag("/posts/create") do%>
-	<textarea　name="content"></textarea>
-	<input type="submit"value="投稿">
+    <div class="form">
+      <div class="form-body">
+       <textarea name="content"></textarea>
+	     <input type="submit" value="投稿">  
+      </div>
+    </div>
 <%end%>
 
 
@@ -291,6 +293,14 @@ flash[:notice]="表示させたい文字"
 一番新しいデータベースの値を取得
 .new
 ------------------------
+データベース保存
+
+データベースPostにデータを入れてsave
+データベースに保存するためのインスタンス作成
+post=Post.new(content:"naiyou")
+インスタンスをデータベースに保存
+post.save
+
 ------------------------
 ------------------------
 ------------------------
