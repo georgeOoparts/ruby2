@@ -81,6 +81,9 @@ rails g model Post カラム名:データの型
 
 ・app/modelsフォルダにモデルが定義されたpost.rbができる
 ・db/migrateフォルダにマイグレーションファイル
+
+複数のカラムのデータベースのmigrateファイルを作る
+rails g model User name:string email:string
 ---------
 マイグレーションファイルに書いてる通りデータベースを変更する
 rails db:migrate
@@ -91,11 +94,16 @@ rails db:migrate
 「1+1」を実行すると、その実行結果が表示されます。
 また、「quit」を実行すると、コンソールを終了することができます。
 --------
-データの作成
- 
+データの作成　nyuuryoku　nyuryoku
+新しいデータベースidのインスタンスを得る(id)以外は何も情報を入れない
+post1 = Post.new 
+------------------------
 モデル名Postのapp/modelsフォルダにモデルが定義されたpost.rbのインスタンスを作る
 post1 = Post.new(content: "今日からProgateでRailsの勉強するよー！")
-
+--------
+複数のカラムのインスタンスを作る
+post1 = Post.new(name: "にんじゃわんこ", email: "wanko@prog-8.com")
+--------
 作られたインスタンスをデータベースにセーブ。
 post1.save
 ------------
@@ -125,7 +133,7 @@ erbファイルでよく使うパターン
 <% end %>
 
 ------------------------
-共通のHTMLを書く
+共通のHTMLを書く　kyotu　kyoutuu
 
 「views/layouts/application.html.erb」
 bodyに共通のhtmlコードを書く
@@ -244,9 +252,11 @@ get　データベースを変更しない
 
 post　データベースを変更する
 ------------------------
-postへのリンク
+postへのリンク　postlink
 <%= link_to("削除", "/posts/#{@post.id}/destroy",{method: "post"}) %>
 ------------------------
+データベース制限　
+
 データベースで空の投稿を防ぐ　
 app＞models＞post.rb
 
@@ -261,6 +271,11 @@ class Post < ApplicationRecord
   validates :content, {length: {maximum: 数値}}
 end
 ------------------------
+データベースであるカラムで同じ値が入らないようにする。同値
+  validates :content, {uniqueness:true}
+
+------------------------
+
 データベースで複数の制限
 validates :content, {presence: true,length: {maximum: 数値}}
 ------------------------
@@ -268,13 +283,14 @@ validates :content, {presence: true,length: {maximum: 数値}}
 
 if @post.save
 	save成功時の処理
+
 else
 	save失敗時の処理
 end
 
 //@post.saveで実際にデータベースにsaveの処理をする
 ------------------------
-特定のアクション変数を使って転送
+特定のアクション変数を使って転送 rewasureru renanika
 コントローラで
 (editアクションを経由せずに特定のアクションの変数を使う)
 render("posts/edit")
@@ -283,8 +299,12 @@ save失敗時のエラーメッセージを表示
 @post.errors.full_messages
 ------------------------
 一度だけ表示されるメッセージ　フラッシュを表示させる
-アクション
+アクションで使う　
 flash[:notice]="表示させたい文字"
+
+erbで
+if　flash[:notice]
+とできる
 ----------
 フラッシュの使いまわし
 レイアウト＞aplication.html.erb
@@ -300,13 +320,58 @@ flash[:notice]="表示させたい文字"
 post=Post.new(content:"naiyou")
 インスタンスをデータベースに保存
 post.save
+------------------------
+マイグレーションファイルのみを作成するには、
+「rails g migration ファイル名」とします。
+指定したファイル名のマイグレーションファイルが作成されます。
+ファイル名は自由に指定できますが、追加するカラム名を含めるなど分かりやすい名前が望ましいです。
+また、ファイル名には先頭にファイルの作成日時が自動的に追加されます。
 
+
+元々あるデータベースに新たにカラムを追加する
+１．ミグレーションファイル追加
+rails g migration　add_image_name_to_users
+rails g migration ファイル名
+
+＞db/migrateフォルダに、
+作成日時_ファイル名という名のミグレーションファイルができる
+
+２．ミグレーションファイルの編集
+add_column :テーブル名, :カラム名, :データ型
+db/migrateフォルダのミグレーションフォルダで
+加えるカラムを下記のように書く
+add_column :テーブル名, :カラム名, :データ型
+
+class AddImageNameToUsers < ActiveRecord::Migration[5.0]
+  def change
+    add_column :users, :image_name, :string
+  end
+end
+
+３．ミグレーションファイルをデータベースに反映
+rails db:migrate
 ------------------------
+画像を張る　image_nameは画像の入ったデータベースのカラム名
+画像は画像はpublic/user_imagesフォルダに保存
+<img src="<%= "/user_images/#{@user.image_name}" %>">
 ------------------------
+formで画像を送る
+画像をformで送るため、, {multipart: true}を追加
+<%= form_tag("/users/#{@user.id}/update", {multipart: true}) do %>            
+
+画像の種類を選択ができるようにするため　
+type="file"追加
+<input name="image"type="file">
 ------------------------
+Hello World と書かれたテキストファイルsample.txt　をpublicフォルダに作る
+File.write("public/sample.txt", "Hello World")
 ------------------------
+ファイルを作成するためにはFileクラスを用います。
+ただし、前ページで学習したように画像データは特殊なテキストファイルであるため、
+File.writeではなくFile.binwriteを用いる必要があります。
+図のように変数imageに対し、readメソッドを用いることでその画像データを取得できます。
 ------------------------
-------------------------
+
 ------------------------
 ------------------------
 ------------------------

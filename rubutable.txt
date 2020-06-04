@@ -80,10 +80,29 @@ RAIL2　22:18
 
 saikai3;15 4:00 
 
+2020/05/29 14:40
+rail7途中まで
+17:00
 
+20;40saikai
 
+21;20  ruby7
 
+22:20 ruby8 4/11 
+22:45 kyuukei
+23:05　ruby8 5/11
+休憩
+23:40
+ruby8 8/11
+00:35
 
+saikai 
+08:40
+ruby8 8/11kansei
+10;00
+kyuukei
+12:20
+_9/16
 
 
 
